@@ -61,11 +61,11 @@ The best-performing models were selected based on **recall**, which is critical 
 - `tensorflow.keras` for deep learning
 - `scikeras.wrappers.KerasClassifier` for model tuning
 
----
 
 ## 🔬 Future Improvements
 
 - Integrate LSTM or Bidirectional LSTM layers for better context understanding.
 - Use pretrained embeddings like **GloVe** or **BERT**.
-- Implement early stopping and learning rate schedules.
+ -Implement early stopping and learning rate schedules
+
 
