@@ -1,3 +1,4 @@
+SUICIDAL IDEATION DETECTION
 ## 1. Business Understanding
 The goal of this project is to detect suicide ideation through reddit posts and allow timely intervention by health professional
 
