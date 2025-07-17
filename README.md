@@ -1,4 +1,14 @@
 SUICIDAL IDEATION DETECTION
+
+## 📊 Libraries Used
+
+- `scikit-learn`
+- `pandas`, `numpy`
+- `matplotlib`, `seaborn`
+- `nltk`, `re` for text cleaning
+- `tensorflow.keras` for deep learning
+- `scikeras.wrappers.KerasClassifier` for model tuning
+- 
 ## 1. Business Understanding
 The goal of this project is to detect suicide ideation through reddit posts and allow timely intervention by health professional
 
@@ -11,7 +21,7 @@ The dataset contained labeled text data with the following columns:
   - `char_count`
   - `word_count`
   - `sentiment`
-Exploratory analysis was conducted to understand class distribution, text lengths, and sentiment patterns.
+ANnExploratory analysis was conducted to understand class distribution, text lengths, and sentiment patterns.
 
 ### 3. Data Preparation
 Key steps in preprocessing:
@@ -53,14 +63,7 @@ The best-performing models were selected based on **recall**, which is critical 
 - Exported trained models using joblib.
 - Developed an API using  **FastAPI** for inference.
 
-## 📊 Libraries Used
 
-- `scikit-learn`
-- `pandas`, `numpy`
-- `matplotlib`, `seaborn`
-- `nltk`, `re` for text cleaning
-- `tensorflow.keras` for deep learning
-- `scikeras.wrappers.KerasClassifier` for model tuning
 
 ## 🔬 Future Improvements
 
