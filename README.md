@@ -72,15 +72,6 @@ The best-performing models were selected based on **recall**, which is critical 
 - Develop a simple web app or API using FastAPI for inference.
 
 
-## 📊 Libraries Used
-
-- `scikit-learn`
-- `pandas`, `numpy`
-- `matplotlib`, `seaborn`
-- `nltk`, `re` for text cleaning
-- `tensorflow.keras` for deep learning
-- `scikeras.wrappers.KerasClassifier` for model tuning
-- 
 ## 🔬 Future Improvements
 
 - Integrate LSTM or Bidirectional LSTM layers for better context understanding.
