@@ -72,7 +72,7 @@ The best-performing models were selected based on **recall**, which is critical 
 - Develop a simple web app or API using FastAPI for inference.
 
 
-## 🔬 Future Improvements
+##  Future Improvements
 
 - Integrate LSTM or Bidirectional LSTM layers for better context understanding.
 - Use pretrained embeddings like **GloVe** or **BERT**.
