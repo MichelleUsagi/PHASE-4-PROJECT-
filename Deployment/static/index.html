@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Suicide Post Detector</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <div class="container py-5">
+    <h1 class="mb-4 text-center">Suicide Post Detector</h1>
+
+    <!-- Input Card -->
+    <div class="card mb-4 shadow-sm">
+      <div class="card-body">
+        <div class="mb-3">
+          <label for="inputText" class="form-label">Enter text to analyze</label>
+          <textarea
+            id="inputText"
+            class="form-control"
+            rows="4"
+            placeholder="Type your text here…"
+          ></textarea>
+        </div>
+        <button id="predictBtn" class="btn btn-primary">Predict</button>
+      </div>
+    </div>
+
+    <!-- Result Card (hidden until used) -->
+    <div id="result" class="card shadow-sm" style="display: none;">
+      <div class="card-body">
+        <h4 class="card-title">Analysis Result</h4>
+
+        <p>
+          Label:
+          <span id="resultLabel" class="badge fs-6"></span>
+        </p>
+
+        <p class="mb-1">Confidence:</p>
+        <div class="progress mb-3">
+          <div
+            id="resultProb"
+            class="progress-bar"
+            role="progressbar"
+            style="width: 0%;"
+          ></div>
+        </div>
+
+        <h5>Top Features (SHAP)</h5>
+        <table class="table table-sm table-striped">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>SHAP Value</th>
+            </tr>
+          </thead>
+          <tbody id="resultTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  ></script>
+  <script>
+    document
+      .getElementById("predictBtn")
+      .addEventListener("click", async () => {
+        const text = document.getElementById("inputText").value.trim();
+        const resultCard = document.getElementById("result");
+        const labelBadge = document.getElementById("resultLabel");
+        const probBar = document.getElementById("resultProb");
+        const tableBody = document.getElementById("resultTable");
+
+        if (!text) {
+          alert("Please enter some text.");
+          return;
+        }
+
+        resultCard.style.display = "none";
+        labelBadge.className = "badge fs-6";
+        probBar.style.width = "0%";
+        probBar.textContent = "";
+
+        try {
+          const resp = await fetch("/predict", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text })
+          });
+
+          if (!resp.ok) throw new Error(`Server ${resp.status}`);
+
+          const data = await resp.json();
+
+          // Show label
+          labelBadge.textContent = data.label;
+          labelBadge.classList.add(
+            data.label === "suicide" ? "bg-danger" : "bg-success"
+          );
+
+          // Show probability
+          const pct = Math.round(data.probability * 100) + "%";
+          probBar.style.width = pct;
+          probBar.textContent = pct;
+          probBar.setAttribute("aria-valuenow", data.probability);
+
+          // Populate the features table
+          tableBody.innerHTML = "";
+          data.explanations.forEach((feat) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td>${feat.feature}</td>
+              <td>${feat.shap_value.toFixed(4)}</td>
+            `;
+            tableBody.append(row);
+          });
+
+          resultCard.style.display = "block";
+        } catch (err) {
+          alert("Error: " + err.message);
+        }
+      });
+  </script>
+</body>
+</html>
+
